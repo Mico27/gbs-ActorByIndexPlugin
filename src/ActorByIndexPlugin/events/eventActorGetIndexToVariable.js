@@ -28,9 +28,14 @@ export const fields = [
 ];
 
 export const compile = (input, helpers) => {
-  const { setActorId, _declareLocal, _rpn, _addComment } = helpers;
+  const { setActorId, getVariableAlias, _declareLocal, _isIndirectVariable, _setInd, _addComment } = helpers;
   _addComment("Actor Get Index To Variable");
-  const tmp = _declareLocal("act_idx_tmp", 1, true);
-  setActorId(tmp, input.actorId);
-  _rpn().ref(tmp).refSetVariable(input.variable).stop();
+  const variableAlias = getVariableAlias(input.variable);
+  if (_isIndirectVariable(input.variable)) {
+    const tmp = _declareLocal("act_idx_tmp", 1, true);
+    setActorId(tmp, input.actorId);
+    _setInd(variableAlias, tmp);
+  } else {
+    setActorId(variableAlias, input.actorId);
+  }
 };
