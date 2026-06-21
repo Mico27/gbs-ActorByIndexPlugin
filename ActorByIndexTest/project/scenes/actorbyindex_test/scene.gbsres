@@ -1,0 +1,1123 @@
+{
+  "_resourceType": "scene",
+  "id": "6f94c75c-83e7-4bfc-ad9d-c7df73390aae",
+  "_index": 0,
+  "name": "ActorByIndex Test",
+  "backgroundId": "1e5f9d6a-bdbc-43e6-8c34-22f5bb5dea05",
+  "tilesetId": "",
+  "width": 20,
+  "height": 18,
+  "type": "TOPDOWN",
+  "colorModeOverride": "none",
+  "paletteIds": [],
+  "spritePaletteIds": [],
+  "collisions": "",
+  "autoFadeSpeed": 1,
+  "symbol": "scene_test",
+  "x": 256,
+  "y": 256,
+  "script": [
+    {
+      "command": "EVENT_COMMENT",
+      "args": {
+        "text": "=== ActorByIndexPlugin Example Project ===",
+        "__collapse": true
+      },
+      "id": "5c74fb8b-200a-4852-8a61-8b8a1bd77a9a"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "ActorByIndex\nplugin test!\nAll events run on\nscene init."
+        ],
+        "__section": "text"
+      },
+      "id": "ad8d6aef-b4c3-4d64-a81f-dd529169fad2"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "1. Get Index To Variable",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_GET_INDEX_TO_VARIABLE",
+            "args": {
+              "actorId": "e8d61e02-f5c9-411a-ac9a-efdccf5821ca",
+              "variable": "0"
+            },
+            "id": "0cf2436e-96c5-41c1-afee-25cc82b4bd43"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "GetIndex: NPC_A \nindex stored to \nVar0"
+              ],
+              "__section": "text"
+            },
+            "id": "ebd51ee8-b409-47cc-85ea-2db07e2f3254"
+          }
+        ]
+      },
+      "id": "f642a361-50dc-447f-911c-7789903853f7"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "2. Show / Hide By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_HIDE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            "id": "94de328c-f8ff-4509-ae40-56e916b5df4a"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_B (idx 1) \nhidden"
+              ],
+              "__section": "text"
+            },
+            "id": "b0539af8-60cd-446c-b89e-c0a842bcfc1a"
+          },
+          {
+            "command": "EVENT_ACTOR_SHOW_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 1
+              }
+            },
+            "id": "c04b81d9-fd50-41c3-9178-d129210ecfe9"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_B (idx 1) \nshown"
+              ],
+              "__section": "text"
+            },
+            "id": "18c96d26-3114-468c-a987-62681e435c9c"
+          }
+        ]
+      },
+      "id": "c9bf38e1-6c08-4b7b-907d-cf6d1cfba61b"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "3. Set Position By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_SET_POSITION_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "x": {
+                "type": "number",
+                "value": 3
+              },
+              "y": {
+                "type": "number",
+                "value": 3
+              },
+              "units": "tiles"
+            },
+            "id": "928a09c7-ee57-4459-b503-2748ea19d959"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetPos NPC_A -> \ntile 3,3"
+              ],
+              "__section": "text"
+            },
+            "id": "cb0f99b9-5a01-42f4-947e-3f6c4d977506"
+          }
+        ]
+      },
+      "id": "cfcf50f6-6774-4568-94b7-14f7a33bbc20"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "4. Get Position By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_GET_POSITION_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "vectorX": "1",
+              "vectorY": "2",
+              "units": "tiles"
+            },
+            "id": "371aad41-6ce0-4cb4-a95a-2a1c9d381b4b"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "GetPos NPC_A \nstored to \nVar1, Var2"
+              ],
+              "__section": "text"
+            },
+            "id": "3e5a5790-3565-431d-8966-107e3dd22442"
+          }
+        ]
+      },
+      "id": "17e88cff-8c0d-48ad-8ea0-f5cb56ad084c"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "5. Set Position Relative By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_SET_POSITION_RELATIVE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "x": {
+                "type": "number",
+                "value": 2
+              },
+              "y": {
+                "type": "number",
+                "value": 0
+              },
+              "units": "tiles"
+            },
+            "id": "ac988bf4-e7de-4aa6-9f61-2fb21a8e401b"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetPosRel NPC_A \n+2,0 => tile 5,3"
+              ],
+              "__section": "text"
+            },
+            "id": "72585c55-8cad-441e-9296-f0e577cc7197"
+          }
+        ]
+      },
+      "id": "0c47f85c-6f4c-4cfe-ba75-145276ac9e44"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "6. If Actor At Position By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_IF_ACTOR_AT_POSITION_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "x": {
+                "type": "number",
+                "value": 5
+              },
+              "y": {
+                "type": "number",
+                "value": 3
+              },
+              "units": "tiles",
+              "__collapseElse": false,
+              "__disableElse": false
+            },
+            "children": {
+              "true": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A at 5,3: \nTRUE (pass)"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "ed6ee6b8-6217-4987-b003-6951b8812cef"
+                }
+              ],
+              "false": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A not at 5,3 \n(check pos)"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "b7f5f3c1-0811-4c86-a634-16899e3fb020"
+                }
+              ]
+            },
+            "id": "e6110edc-064a-4456-b853-beb9e397568a"
+          }
+        ]
+      },
+      "id": "412ea0ce-0212-451d-996b-f38f464c28e1"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "7. Set Direction By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_SET_DIRECTION_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "direction": {
+                "type": "direction",
+                "value": "right"
+              }
+            },
+            "id": "ecf7f184-6f99-440c-b5f5-2d8a298290d1"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetDir NPC_A: \nright"
+              ],
+              "__section": "text"
+            },
+            "id": "f252733e-6a7f-4312-a8cb-40cc13513fa2"
+          }
+        ]
+      },
+      "id": "6af7d7a1-17e4-44b7-a37f-7456c630a0c1"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "8. Get Direction By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_GET_DIRECTION_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "direction": "3"
+            },
+            "id": "93719985-6b67-4b2a-a85c-d47392fd2a6e"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "GetDir NPC_A \nstored to Var3"
+              ],
+              "__section": "text"
+            },
+            "id": "b4612f20-ac50-4ca7-a61f-d737ab0bd116"
+          }
+        ]
+      },
+      "id": "0bdb2907-511d-4930-8304-9531843663c0"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "9. If Actor Direction By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_IF_ACTOR_DIRECTION_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "direction": {
+                "type": "direction",
+                "value": "right"
+              },
+              "__collapseElse": false,
+              "__disableElse": false
+            },
+            "children": {
+              "true": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A facing \nright: TRUE (pass)"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "22c3fcef-1508-4858-b636-4eeb5a6861ec"
+                }
+              ],
+              "false": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A not facing \nright"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "7b906c02-767b-4ef6-a63d-7fd0c5958e30"
+                }
+              ]
+            },
+            "id": "909b5b93-885d-42ab-9760-27fda2b16b6e"
+          }
+        ]
+      },
+      "id": "ea053aab-6f86-48d1-ad89-bb2bdf6e55eb"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "10. Activate / Deactivate By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_DEACTIVATE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 2
+              }
+            },
+            "id": "87fbed4e-22f2-492c-bb1f-d5867ecca1c2"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_C (idx 2) \ndeactivated"
+              ],
+              "__section": "text"
+            },
+            "id": "5373322f-18de-465f-9a05-19145b08793b"
+          },
+          {
+            "command": "EVENT_ACTOR_ACTIVATE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 2
+              }
+            },
+            "id": "7ee33910-db8f-4fbc-9407-46bd8801802c"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_C (idx 2) \nactivated"
+              ],
+              "__section": "text"
+            },
+            "id": "82573ec3-51ab-406b-9384-8749df4fad21"
+          }
+        ]
+      },
+      "id": "dfde1584-d6d2-4372-a7ac-924e6ef277d5"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "11. Collisions Enable / Disable By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_COLLISIONS_DISABLE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 3
+              }
+            },
+            "id": "09ae1c80-6a56-4b94-ac5b-70155e1223d9"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_D (idx 3) \ncollisions \ndisabled"
+              ],
+              "__section": "text"
+            },
+            "id": "c5a949d8-6398-4201-bf5b-98086a212cfe"
+          },
+          {
+            "command": "EVENT_ACTOR_COLLISIONS_ENABLE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 3
+              }
+            },
+            "id": "723528d6-c8b2-4b70-9798-d399cbcf0ec4"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_D (idx 3) \ncollisions enabled"
+              ],
+              "__section": "text"
+            },
+            "id": "868ab476-0493-4def-82ce-d4648b812b07"
+          }
+        ]
+      },
+      "id": "82946078-6501-4bc4-af5c-eb2594fda720"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "12. Movement & Animation Speed By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_SET_MOVEMENT_SPEED_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "speed": 2
+            },
+            "id": "c1fed088-2560-4c13-9293-96d61f36826c"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetMoveSpeed \nNPC_A: 2"
+              ],
+              "__section": "text"
+            },
+            "id": "ac4aee29-1a3e-42bf-b505-148149fbce52"
+          },
+          {
+            "command": "EVENT_ACTOR_SET_ANIMATION_SPEED_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "speed": 7
+            },
+            "id": "4bf9148f-366a-4c42-becd-c47fa8173b8a"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetAnimSpeed \nNPC_A: 7"
+              ],
+              "__section": "text"
+            },
+            "id": "dbb2b757-f9ac-4b76-9ea4-9b42df021e3d"
+          }
+        ]
+      },
+      "id": "c88348be-a3b3-4e9c-afdb-4f5ec9ffdf56"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "13. Frame / State / Sprite By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_SET_FRAME_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "frame": {
+                "type": "number",
+                "value": 0
+              }
+            },
+            "id": "df126f21-a6eb-424e-b443-f8af35d72af1"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetFrame NPC_A: 0"
+              ],
+              "__section": "text"
+            },
+            "id": "4b1ce318-89c6-4e1e-9527-4fdb13b225dc"
+          },
+          {
+            "command": "EVENT_ACTOR_SET_STATE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "spriteStateId": "",
+              "loopAnim": true
+            },
+            "id": "26cf10b9-8da2-4f5b-aa73-a4137ea25a97"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetState NPC_A: \ndefault (looped)"
+              ],
+              "__section": "text"
+            },
+            "id": "c77c58b4-5739-4085-a929-8a4b77190041"
+          },
+          {
+            "command": "EVENT_ACTOR_SET_SPRITE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "spriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
+            },
+            "id": "f0587e28-88b8-4b34-95e8-463caeb1c9a2"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetSprite NPC_A: \nactor_animated"
+              ],
+              "__section": "text"
+            },
+            "id": "89960d7d-cac0-4fb2-baa4-86cf0b65a7e2"
+          }
+        ]
+      },
+      "id": "7e9801d0-9e14-4a86-b2a7-51a6bc44271f"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "14. Set Collision Box By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_SET_COLLISION_BOX_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 4
+              },
+              "x": {
+                "type": "number",
+                "value": 0
+              },
+              "y": {
+                "type": "number",
+                "value": -8
+              },
+              "width": {
+                "type": "number",
+                "value": 16
+              },
+              "height": {
+                "type": "number",
+                "value": 16
+              }
+            },
+            "id": "612aecf7-3a47-4789-b187-05bcc2d9d6eb"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SetCollisionBox \nNPC_E (idx 4):\noffset 0,-8 \nsize 16x16"
+              ],
+              "__section": "text"
+            },
+            "id": "991243e4-8117-4356-bac8-e5a3d9b885b0"
+          }
+        ]
+      },
+      "id": "4899e7ed-e56f-4bf2-91ec-9ba0e0cc6119"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "15. Emote By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_EMOTE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "emoteId": "9df5f63f-ea47-447e-9b14-cb2dbafb697d"
+            },
+            "id": "020ccb29-85bf-435a-b466-caf8f777c263"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "Emote: anger on \nNPC_A (idx 0)"
+              ],
+              "__section": "text"
+            },
+            "id": "9d4204e1-51d6-4770-8439-a1e113b6c3c0"
+          }
+        ]
+      },
+      "id": "4972c630-7f36-421c-9da4-7349aefee8ec"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "16. Effects By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_EFFECTS_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 1
+              },
+              "effect": "flicker",
+              "time": 0.5,
+              "frames": 30,
+              "timeUnits": "time"
+            },
+            "id": "60fb59ac-8fde-4f61-af27-a5a8559f6e33"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "Flicker NPC_B \n(idx 1) for 0.5s"
+              ],
+              "__section": "text"
+            },
+            "id": "a2289cca-f8c3-4f20-b622-21103568a392"
+          },
+          {
+            "command": "EVENT_ACTOR_EFFECTS_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 2
+              },
+              "effect": "splitIn",
+              "distance": 20,
+              "speed": 2,
+              "units": "pixels"
+            },
+            "id": "31c5e82c-0808-4ee7-87a5-80e275853392"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SplitIn NPC_C \n(idx 2)"
+              ],
+              "__section": "text"
+            },
+            "id": "8ea37757-3355-4637-af88-f59068e9b283"
+          },
+          {
+            "command": "EVENT_ACTOR_EFFECTS_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 2
+              },
+              "effect": "splitOut",
+              "distance": 20,
+              "speed": 2,
+              "units": "pixels"
+            },
+            "id": "4da15216-8f62-487e-9af4-4fb74d266e16"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "SplitOut NPC_C \n(idx 2)"
+              ],
+              "__section": "text"
+            },
+            "id": "9a827562-0bde-44d7-847a-bdebf5e558e0"
+          }
+        ]
+      },
+      "id": "4abd3471-5d48-421e-b9d0-b1e3117c6a5b"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "17. If Distance From Actor By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_IF_ACTOR_DISTANCE_FROM_ACTOR_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "operator": "<=",
+              "distance": {
+                "type": "number",
+                "value": 12
+              },
+              "otherActorIndex": {
+                "type": "number",
+                "value": 1
+              },
+              "__collapseElse": false,
+              "__disableElse": false
+            },
+            "children": {
+              "true": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A within 12t \nof NPC_B: TRUE"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "2b2e0c5e-ef07-4b50-9f00-4906bc0e10d2"
+                }
+              ],
+              "false": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A far from \nNPC_B: FALSE"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "a385a326-a6d9-4b56-b742-e941ad269da9"
+                }
+              ]
+            },
+            "id": "17473fe3-2af7-4f58-850c-ce5f9bb3c5fb"
+          }
+        ]
+      },
+      "id": "bb994e98-2959-40fc-92a4-2ab3ae0be727"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "18. If Relative To Actor By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_IF_ACTOR_RELATIVE_TO_ACTOR_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "operation": "left",
+              "otherActorIndex": {
+                "type": "number",
+                "value": 4
+              },
+              "__collapseElse": false,
+              "__disableElse": false
+            },
+            "children": {
+              "true": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A left of \nNPC_E: TRUE (pass)"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "5b20746e-0007-4d5f-9256-718182c935b0"
+                }
+              ],
+              "false": [
+                {
+                  "command": "EVENT_TEXT",
+                  "args": {
+                    "text": [
+                      "NPC_A not left of \nNPC_E: FALSE"
+                    ],
+                    "__section": "text"
+                  },
+                  "id": "71067984-f285-4219-81cb-e6bfdfeb9a5c"
+                }
+              ]
+            },
+            "id": "4b0f9b57-0291-472d-837f-c3e1933509bd"
+          }
+        ]
+      },
+      "id": "da6a1519-8e3d-4012-87c7-8df64bc7009e"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "19. Move To By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_MOVE_TO_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 1
+              },
+              "x": {
+                "type": "number",
+                "value": 10
+              },
+              "y": {
+                "type": "number",
+                "value": 5
+              },
+              "units": "tiles",
+              "collideWith": [
+                "walls"
+              ],
+              "moveType": "horizontal"
+            },
+            "id": "6d624853-a82a-4588-be19-1432b1081807"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_B (idx 1) \nmoved to 10,5"
+              ],
+              "__section": "text"
+            },
+            "id": "eed7012e-9875-4664-b61d-d844513892bc"
+          }
+        ]
+      },
+      "id": "289fb0b1-98cd-46f5-839c-2a0f977ad9f1"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "20. Move Relative By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_MOVE_RELATIVE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 2
+              },
+              "x": {
+                "type": "number",
+                "value": 2
+              },
+              "y": {
+                "type": "number",
+                "value": 0
+              },
+              "units": "tiles",
+              "collideWith": [
+                "walls"
+              ],
+              "moveType": "horizontal"
+            },
+            "id": "f873bcd1-1639-4ac6-b92f-3afdb4a83527"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_C (idx 2) \nmoved +2,0"
+              ],
+              "__section": "text"
+            },
+            "id": "b3f4c0a4-c568-4298-a858-b4a9ac5673bd"
+          }
+        ]
+      },
+      "id": "28b33afc-88d6-4920-beb7-6ce6d83f06b1"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "21. Start / Stop Update Script By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_START_UPDATE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 4
+              }
+            },
+            "id": "61b28eb0-785a-496c-8fe3-fa7df73cd4c8"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_E (idx 4) \nupdate started"
+              ],
+              "__section": "text"
+            },
+            "id": "87a3be20-c3a9-4bda-ba4e-86e13b0c0971"
+          },
+          {
+            "command": "EVENT_ACTOR_STOP_UPDATE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 4
+              }
+            },
+            "id": "dfdeb651-e49d-4f93-9819-fc65d8ffef1c"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_E (idx 4) \nupdate stopped"
+              ],
+              "__section": "text"
+            },
+            "id": "9be9648b-75f1-40f0-8114-02d4247ba8c6"
+          }
+        ]
+      },
+      "id": "53411914-9855-4746-b4d6-b518abdea1a3"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "__label": "22. Move Cancel By Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_ACTOR_MOVE_CANCEL_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "number",
+                "value": 3
+              }
+            },
+            "id": "cdc8219f-50f4-4f66-86cf-8bc9ec745ec1"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "NPC_D (idx 3) move\ncancel called"
+              ],
+              "__section": "text"
+            },
+            "id": "f6ad5ad3-80af-44ba-8fdf-8a735d39e01f"
+          }
+        ]
+      },
+      "id": "e7389d94-4691-4c79-ba6a-81bd133b201b"
+    },
+    {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "=== \nAll 29 \nActorByIndex\nevents tested! \n==="
+        ],
+        "__section": "text"
+      },
+      "id": "96180855-965f-4be2-8968-968dead19276"
+    }
+  ],
+  "playerHit1Script": [],
+  "playerHit2Script": [],
+  "playerHit3Script": []
+}

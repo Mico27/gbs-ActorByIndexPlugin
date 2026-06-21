@@ -1,0 +1,26 @@
+{
+  "_resourceType": "variables",
+  "variables": [
+    {
+      "id": "0",
+      "name": "ActorIndexStore",
+      "symbol": "var_actor_index_store"
+    },
+    {
+      "id": "1",
+      "name": "PosX",
+      "symbol": "var_pos_x"
+    },
+    {
+      "id": "2",
+      "name": "PosY",
+      "symbol": "var_pos_y"
+    },
+    {
+      "id": "3",
+      "name": "DirStore",
+      "symbol": "var_dir_store"
+    }
+  ],
+  "constants": []
+}
