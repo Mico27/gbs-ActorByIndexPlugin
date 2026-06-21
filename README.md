@@ -61,6 +61,50 @@ Repeat 4 times:
 
 ---
 
+## Example: pooled effect actor (tree-cut from the ContinuousScene example)
+
+The [ContinuousScenePlugin example project](https://github.com/Mico27/gbs-ContinuousScenePlugin) uses this plugin to implement a Pokémon-style tree-cutting effect. A single dedicated **ActorEffect** actor serves as a reusable visual effect triggered by an *Attach Script to Input* event — a context that has no actor reference of its own.
+
+**How it works:**
+
+A custom script (`Init Overworld Script`) is called once when the scene loads. It accepts `ActorEffect` as a custom script actor argument and immediately captures its scene index:
+
+```
+Actor Get Index To Variable
+  Actor:    ActorEffect   (custom script argument)
+  Variable: ActorEffectIdx
+```
+
+Later, whenever the player presses the action button facing a tree, an **Attach Script to Input** event fires. That attached script reuses the stored index to:
+
+```
+1. Actor Set Position By Index
+     Actor Index: ActorEffectIdx
+     X: PlayerX,  Y: PlayerY     ← teleport to the tree's tile
+
+2. Actor Set Animation State By Index
+     Actor Index: ActorEffectIdx
+     State: default,  Loop: false ← play cut animation once
+
+3. Actor Activate By Index
+     Actor Index: ActorEffectIdx  ← make it visible and running
+
+   [animation plays...]
+
+4. Actor Deactivate By Index
+     Actor Index: ActorEffectIdx  ← hide it when done
+```
+
+**Why this needs the plugin:**
+
+*Attach Script to Input* runs in a context detached from any specific actor — there is no actor reference available inside it. Even though `ActorEffect` was passed as a custom script argument at init time, that argument is not accessible from within the attached input script. Without this plugin the only way to reach the effect actor from there would be raw GBVM assembly.
+
+By capturing the index once at init with `Actor Get Index To Variable` and storing it in a global variable, the attached input script can retrieve that handle at any time and operate on the effect actor as if it had a direct reference to it.
+
+This pattern generalises to any situation where you need a small pool of shared effect actors (explosions, sparks, text popups) that are repositioned and replayed on demand rather than placed statically in the scene.
+
+---
+
 ## Installation
 
 Copy the `src/ActorByIndexPlugin` folder into your GB Studio project's `plugins/` directory:
