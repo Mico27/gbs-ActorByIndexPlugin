@@ -178,3 +178,11 @@ Every event in this plugin accepts `actorIndex` (and `otherActorIndex` where rel
 - An **expression** — any arithmetic or bitwise expression that evaluates to an index.
 
 Actor indices are zero-based and correspond to the order actors appear in the scene (the `_index` field in each actor's `.gbsres` file). Index `0` is the first scene actor; the player character is not included in the scene actor list.
+
+
+
+https://github.com/user-attachments/assets/e5eac997-8537-4cd3-9546-1c5014afcae1
+
+
+
+<img width="768" height="1842" alt="ActorByIndexScript" src="https://github.com/user-attachments/assets/9538f699-17f1-4aa2-9fd8-04da15fdbab5" />
