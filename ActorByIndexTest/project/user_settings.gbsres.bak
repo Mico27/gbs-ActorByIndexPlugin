@@ -21,7 +21,7 @@
     "EVENT_SWITCH_SCENE"
   ],
   "debuggerEnabled": true,
-  "debuggerScriptType": "gbvm",
+  "debuggerScriptType": "editor",
   "debuggerVariablesFilter": "all",
   "debuggerCollapsedPanes": [],
   "debuggerPauseOnScriptChanged": false,

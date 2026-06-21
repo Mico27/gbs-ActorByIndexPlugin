@@ -202,6 +202,12 @@ All events are found in the **Actor** event group. Events that read or write var
 | **Actor Emote By Index** | Plays an emote above the actor at the given index. |
 | **Actor Effects By Index** | Applies a visual effect to the actor at the given index: **Flicker** (for a given duration), **Split In**, or **Split Out** (with configurable distance and speed). |
 
+### Projectiles
+
+| Event | Description |
+|---|---|
+| **Launch Projectile Slot By Index** | Launches a pre-loaded projectile slot from the actor at the given index. Uses a slot number (1–5) instead of defining the projectile inline, and supports the same direction modes as above. |
+
 ### Conditionals
 
 | Event | Description |

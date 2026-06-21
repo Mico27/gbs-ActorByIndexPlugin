@@ -1107,6 +1107,68 @@
       "id": "e7389d94-4691-4c79-ba6a-81bd133b201b"
     },
     {
+      "command": "EVENT_TEXT",
+      "args": {
+        "text": [
+          "=== \nAll 29 \nActorByIndex\nevents tested! \n==="
+        ],
+        "__section": "text"
+      },
+      "id": "96180855-965f-4be2-8968-968dead19276"
+    },
+    {
+      "command": "EVENT_GROUP",
+      "args": {
+        "name": "LaunchProjectile\nBy Index",
+        "__collapse": false
+      },
+      "children": {
+        "true": [
+          {
+            "command": "EVENT_LAUNCH_PROJECTILE_BY_INDEX",
+            "args": {
+              "actorIndex": {
+                "type": "variable",
+                "value": "0"
+              },
+              "x": 0,
+              "y": 0,
+              "directionType": "direction",
+              "direction": "right",
+              "angle": 0,
+              "angleVariable": "LAST_VARIABLE",
+              "spriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd",
+              "spriteStateId": "",
+              "speed": 2,
+              "animSpeed": 15,
+              "lifeTime": 1,
+              "initialOffset": 0,
+              "loopAnim": true,
+              "destroyOnHit": true,
+              "collisionGroup": "3",
+              "collisionMask": [
+                "1"
+              ],
+              "__section": "projectile",
+              "__collapse": false
+            },
+            "id": "83d855ca-5d59-4efa-9a93-c077bb59e11e"
+          },
+          {
+            "command": "EVENT_TEXT",
+            "args": {
+              "text": [
+                "LaunchProjectile\nBy Index (idx0)\ndirection: right"
+              ],
+              "__collapse": false
+            },
+            "id": "a14bfb20-ffab-4d2a-8849-03f9b9a020d6"
+          }
+        ]
+      },
+      "id": "870d46f0-3530-4432-810b-997b0ca8ea66"
+    },
+    {
       "command": "EVENT_GROUP",
       "args": {
         "name": "LaunchProjectile\nSlot By Index",
@@ -1114,26 +1176,6 @@
       },
       "children": {
         "true": [
-          {
-            "command": "EVENT_LOAD_PROJECTILE_SLOT",
-            "args": {
-              "__section": "projectile",
-              "slot": 0,
-              "spriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd",
-              "spriteStateId": "",
-              "speed": 2,
-              "animSpeed": 15,
-              "lifeTime": 4,
-              "initialOffset": 0,
-              "loopAnim": true,
-              "destroyOnHit": false,
-              "collisionGroup": "3",
-              "collisionMask": [
-                "1"
-              ]
-            },
-            "id": "70ab8aac-fe51-4400-b8f0-30e229a6ce61"
-          },
           {
             "command": "EVENT_LAUNCH_PROJECTILE_SLOT_BY_INDEX",
             "args": {
@@ -1143,17 +1185,13 @@
               },
               "x": 0,
               "y": 0,
-              "directionType": "actor",
+              "directionType": "direction",
               "direction": "right",
               "angle": 0,
               "angleVariable": "LAST_VARIABLE",
               "slot": 0,
               "__section": "source",
-              "__collapse": false,
-              "otherActorIndex": {
-                "type": "variable",
-                "value": "0"
-              }
+              "__collapse": false
             },
             "id": "a02d0490-829d-44b7-b53f-86994b04c783"
           },
