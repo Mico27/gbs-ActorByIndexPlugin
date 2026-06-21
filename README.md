@@ -227,8 +227,8 @@ All events are found in the **Actor** event group. Events that read or write var
 
 Every event in this plugin accepts `actorIndex` (and `otherActorIndex` where relevant) as a **value** field. This means you can supply:
 
-- A **literal number** — e.g. `0` for the first scene actor.
+- A **literal number** — e.g. `0` for the first scene actor (The player actor).
 - A **variable** — any global, local, or temp variable holding the index.
 - An **expression** — any arithmetic or bitwise expression that evaluates to an index.
 
-Actor indices are zero-based and correspond to the order actors appear in the scene (the `_index` field in each actor's `.gbsres` file). Index `0` is the first scene actor; the player character is not included in the scene actor list.
+Actor indices are zero-based and correspond to the order actors appear in the scene (the `_index` field in each actor's `.gbsres` file). Index `0` is the first scene actor; the player character is not included in the scene actor list in the gbsres file, but the index is 0 for the player actor during runtime.
