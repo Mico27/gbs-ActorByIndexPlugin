@@ -65,6 +65,10 @@ Repeat 4 times:
 
 The [ContinuousScenePlugin example project](https://github.com/Mico27/gbs-ContinuousScenePlugin) uses this plugin to implement a Pokémon-style tree-cutting effect. A single dedicated **ActorEffect** actor serves as a reusable visual effect triggered by an *Attach Script to Input* event — a context that has no actor reference of its own.
 
+https://github.com/user-attachments/assets/e5eac997-8537-4cd3-9546-1c5014afcae1
+
+<img width="768" height="1842" alt="ActorByIndexScript" src="https://github.com/user-attachments/assets/9538f699-17f1-4aa2-9fd8-04da15fdbab5" />
+
 **How it works:**
 
 A custom script (`Init Overworld Script`) is called once when the scene loads. It accepts `ActorEffect` as a custom script actor argument and immediately captures its scene index:
@@ -222,11 +226,3 @@ Every event in this plugin accepts `actorIndex` (and `otherActorIndex` where rel
 - An **expression** — any arithmetic or bitwise expression that evaluates to an index.
 
 Actor indices are zero-based and correspond to the order actors appear in the scene (the `_index` field in each actor's `.gbsres` file). Index `0` is the first scene actor; the player character is not included in the scene actor list.
-
-
-
-https://github.com/user-attachments/assets/e5eac997-8537-4cd3-9546-1c5014afcae1
-
-
-
-<img width="768" height="1842" alt="ActorByIndexScript" src="https://github.com/user-attachments/assets/9538f699-17f1-4aa2-9fd8-04da15fdbab5" />
