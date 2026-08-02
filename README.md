@@ -232,3 +232,37 @@ Every event in this plugin accepts `actorIndex` (and `otherActorIndex` where rel
 - An **expression** — any arithmetic or bitwise expression that evaluates to an index.
 
 Actor indices are zero-based and correspond to the order actors appear in the scene (the `_index` field in each actor's `.gbsres` file). Index `0` is the first scene actor; the player character is not included in the scene actor list in the gbsres file, but the index is 0 for the player actor during runtime.
+
+---
+
+<!-- BANK0:BEGIN -->
+## Bank 0 (HOME) Usage
+
+Bank 0 is the 16 KB non-switchable ROM bank that the GB Studio engine core,
+the interrupt handlers and the GBDK runtime all share. Banked ROM is cheap
+(add another bank), bank 0 is not, so it is usually the first thing a project
+runs out of.
+
+| | Bytes |
+|---|---|
+| Bank 0 used by this plugin | **0** |
+| Bank 0 free with this plugin installed | **1,451** of 16,384 (91% used) |
+
+**This plugin costs nothing in bank 0.** All of its code lives in a switchable
+ROM bank; nothing it adds is resident in bank 0.
+
+<details><summary>How this was measured</summary>
+
+GB Studio 4.3.2, DMG target, default engine settings. Each module's bank 0
+contribution is the `A _HOME size` record that SDCC writes into its `.rel`
+object, summed over the engine sources this plugin provides. Stock sizes come
+from building projects whose only plugin ships no engine C, so every module in
+them is the untouched engine; two such builds were compared and agreed on all
+73 shared modules.
+
+The "free" figure is a stock project with this plugin and nothing else. Your
+own number will differ: other plugins, and any engine settings that change what
+the core compiles, move it independently of this plugin.
+
+</details>
+<!-- BANK0:END -->
