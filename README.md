@@ -1,29 +1,42 @@
-# Actor By Index Plugin
+# gbs-ActorByIndexPlugin
 
-**Author:** Mico27  
-**Version:** 4.3.0  
-**Requires:** GB Studio >= 4.3.0
+**Version 4.3.0 — Requires GB Studio ≥ 4.3.0**
 
-Re-exposes every standard GB Studio actor event with an **index-based actor selector** instead of the built-in actor picker. The actor to operate on is supplied as a `value` field, meaning it can be a literal number, a variable, or any expression — resolved at runtime rather than baked in at compile time.
+Re-exposes every standard GB Studio actor event with an **index-based actor selector** instead of the built-in actor picker. The actor to operate on is supplied as a value field, so it can be a literal number, a variable, or any expression — resolved at runtime rather than baked in when the project is built.
 
 ---
 
-## Why this plugin exists
+## Table of Contents
+
+1. [Concepts](#concepts)
+2. [Project Setup](#project-setup)
+3. [Size Limits and Restrictions](#size-limits-and-restrictions)
+4. [Events Reference](#events-reference)
+5. [Memory Footprint](#memory-footprint)
+
+---
+
+## Concepts
+
+### Actor indices
+
+Actor indices are **zero-based** and follow the order actors appear in the scene. Index **0** is the player actor at runtime; the scene's own actors follow in the order they were created.
+
+Every event in this plugin takes its actor as a **value** field, so you can supply:
+
+- a **literal number** — e.g. `0` for the player;
+- a **variable** — any global, local or temp variable holding an index;
+- an **expression** — any arithmetic or bitwise expression that evaluates to an index.
 
 ### The custom script problem
 
-GB Studio's **custom scripts** (reusable scripts called with *Call Custom Script*) let you define a sequence of events once and reuse it across many actors or scenes. However, when a custom script is **attached to an input or collision** (via *Attach Script to Input / Actor*), it runs detached from any actor context — the standard *Actor* picker inside the script has no way to refer to "the actor that owns this script" dynamically.
+GB Studio's **custom scripts** let you define a sequence of events once and reuse it across many actors or scenes. But when a custom script is attached to an input or a collision, it runs detached from any actor context — the standard *Actor* picker inside it has no way to refer to "the actor that owns this script".
 
-With this plugin you can:
-
-1. Use **Actor Get Index To Variable** at the start of the script to store the calling actor's scene index into a variable.
-2. Pass that variable to any **By Index** event to operate on that same actor throughout the rest of the script.
-
-Without this plugin the only alternative is writing the equivalent logic in raw GBVM assembly.
+With this plugin you can capture an actor's index once with **Actor Get Index To Variable**, then pass that variable to any **By Index** event to operate on the same actor from anywhere. Without the plugin, the only alternative is writing the equivalent logic in raw GBVM assembly.
 
 ### Dynamic actor targeting
 
-Because `actorIndex` is a `value` field, you can drive it with any variable or expression, enabling patterns that are impossible with the standard actor picker:
+Because the actor is a value, patterns that are impossible with the standard picker become straightforward:
 
 - **Loop over all actors** by incrementing a counter variable and calling By Index events inside the loop.
 - **Store an actor reference** in a global variable early in a scene and retrieve it later from a completely unrelated script.
@@ -31,7 +44,12 @@ Because `actorIndex` is a `value` field, you can drive it with any variable or e
 
 ---
 
-## Example: actor self-reference in an attached script
+## Project Setup
+
+1. Add **Actor Get Index To Variable** wherever you have a real actor reference (typically an actor's *On Init*, or a custom script that receives the actor as an argument), and store the index in a variable.
+2. From any other script, call the matching **By Index** event and feed it that variable.
+
+### Example: actor self-reference in an attached script
 
 ```
 On Init:
@@ -47,9 +65,7 @@ Attached script body:
     X: 5, Y: 5
 ```
 
----
-
-## Example: loop over all scene actors
+### Example: loop over all scene actors
 
 ```
 Set Variable ActorIdx = 0
@@ -59,9 +75,7 @@ Repeat 4 times:
   Math: ActorIdx += 1
 ```
 
----
-
-## Example: pooled effect actor (tree-cut from the ContinuousScene example)
+### Example: pooled effect actor
 
 The [ContinuousScenePlugin example project](https://github.com/Mico27/gbs-ContinuousScenePlugin) uses this plugin to implement a Pokémon-style tree-cutting effect. A single dedicated **ActorEffect** actor serves as a reusable visual effect triggered by an *Attach Script to Input* event — a context that has no actor reference of its own.
 
@@ -69,9 +83,7 @@ https://github.com/user-attachments/assets/e5eac997-8537-4cd3-9546-1c5014afcae1
 
 <img width="768" height="1842" alt="ActorByIndexScript" src="https://github.com/user-attachments/assets/9538f699-17f1-4aa2-9fd8-04da15fdbab5" />
 
-**How it works:**
-
-A custom script (`Init Overworld Script`) is called once when the scene loads. It accepts `ActorEffect` as a custom script actor argument and immediately captures its scene index:
+A custom script called once when the scene loads receives `ActorEffect` as an actor argument and immediately captures its index:
 
 ```
 Actor Get Index To Variable
@@ -79,7 +91,7 @@ Actor Get Index To Variable
   Variable: ActorEffectIdx
 ```
 
-Later, whenever the player presses the action button facing a tree, an **Attach Script to Input** event fires. That attached script reuses the stored index to:
+Later, whenever the player presses the action button facing a tree, the attached input script reuses the stored index:
 
 ```
 1. Actor Set Position By Index
@@ -99,43 +111,31 @@ Later, whenever the player presses the action button facing a tree, an **Attach 
      Actor Index: ActorEffectIdx  ← hide it when done
 ```
 
-**Why this needs the plugin:**
+Even though `ActorEffect` was passed as a custom script argument at init time, that argument is not reachable from the attached input script. Capturing the index once and storing it in a global variable gives that script a handle it can use at any time.
 
-*Attach Script to Input* runs in a context detached from any specific actor — there is no actor reference available inside it. Even though `ActorEffect` was passed as a custom script argument at init time, that argument is not accessible from within the attached input script. Without this plugin the only way to reach the effect actor from there would be raw GBVM assembly.
-
-By capturing the index once at init with `Actor Get Index To Variable` and storing it in a global variable, the attached input script can retrieve that handle at any time and operate on the effect actor as if it had a direct reference to it.
-
-This pattern generalises to any situation where you need a small pool of shared effect actors (explosions, sparks, text popups) that are repositioned and replayed on demand rather than placed statically in the scene.
+This pattern generalises to any situation where you need a small pool of shared effect actors — explosions, sparks, text popups — that are repositioned and replayed on demand rather than placed statically in the scene.
 
 ---
 
-## Installation
+## Size Limits and Restrictions
 
-Copy the `src/ActorByIndexPlugin` folder into your GB Studio project's `plugins/` directory:
-
-```
-your-project/
-  plugins/
-    ActorByIndexPlugin/
-      plugin.json
-      events/
-        eventActorShowByIndex.js
-        ...
-```
-
-An example project is included in `ActorByIndexTest/`.
+- An index that does not correspond to an actor in the current scene has undefined results — validate indices yourself if they are computed.
+- Indices are **scene-relative**. A variable holding an index is only meaningful while the scene that produced it is loaded.
+- Index **0** is the player; scene actors start at 1 at runtime.
 
 ---
 
-## Events
+## Events Reference
 
-All events are found in the **Actor** event group. Events that read or write variables also appear in **Variables**. Conditional events also appear in **Control Flow**.
+All events are found in the **Actor** event group. Events that read or write variables also appear in **Variables**; conditional events also appear in **Control Flow**.
+
+Every event takes an **Actor Index** value field (and **Other Actor Index** where two actors are involved) in place of the stock actor picker. All other fields match the stock event they mirror.
 
 ### Identity
 
 | Event | Description |
 |---|---|
-| **Actor Get Index To Variable** | Stores the scene index of a chosen actor into a variable. Use this at the start of an attached script to capture a self-reference. |
+| **Actor Get Index To Variable** | Stores the scene index of a chosen actor into a variable. Use this to capture a self-reference for later. |
 
 ### Visibility
 
@@ -162,76 +162,72 @@ All events are found in the **Actor** event group. Events that read or write var
 
 | Event | Description |
 |---|---|
-| **Actor Move To By Index** | Moves the actor at the given index to an absolute tile or pixel position. Supports wall/actor collision and move type (horizontal, vertical, diagonal). Waits until the move completes. |
-| **Actor Move Relative By Index** | Moves the actor at the given index by a relative offset. Same collision and move-type options as Move To. Waits until the move completes. |
-| **Actor Move Cancel By Index** | Cancels any in-progress movement for the actor at the given index. |
-| **Actor Set Position By Index** | Instantly teleports the actor at the given index to an absolute position (tiles or pixels). Does not wait. |
-| **Actor Set Position Relative By Index** | Instantly offsets the actor at the given index by a relative amount. Does not wait. |
+| **Actor Move To By Index** | Moves the actor to an absolute tile or pixel position. Supports wall/actor collision and move type (horizontal, vertical, diagonal). Waits until the move completes. |
+| **Actor Move Relative By Index** | Moves the actor by a relative offset, with the same collision and move-type options. Waits until the move completes. |
+| **Actor Move Cancel By Index** | Cancels any in-progress movement for the actor. |
+| **Actor Set Position By Index** | Instantly teleports the actor to an absolute position (tiles or pixels). Does not wait. |
+| **Actor Set Position Relative By Index** | Instantly offsets the actor by a relative amount. Does not wait. |
 
 ### Direction
 
 | Event | Description |
 |---|---|
-| **Actor Set Direction By Index** | Sets the facing direction of the actor at the given index. The direction can be a literal (`up`, `down`, `left`, `right`) or a variable. |
-| **Actor Get Direction By Index** | Reads the facing direction of the actor at the given index into a variable. |
+| **Actor Set Direction By Index** | Sets the facing direction. The direction can be a literal (`up`, `down`, `left`, `right`) or a variable. |
+| **Actor Get Direction By Index** | Reads the facing direction into a variable. |
 
 ### Properties
 
 | Event | Description |
 |---|---|
-| **Actor Set Movement Speed By Index** | Sets the movement speed of the actor at the given index. |
-| **Actor Set Animation Speed By Index** | Sets the animation frame tick speed of the actor at the given index. |
-| **Actor Set Animation Frame By Index** | Jumps the actor at the given index to a specific animation frame. |
-| **Actor Set Animation State By Index** | Sets the animation state (and whether it loops) of the actor at the given index. |
-| **Actor Set Sprite By Index** | Swaps the sprite sheet of the actor at the given index at runtime. |
-| **Actor Set Collision Box By Index** | Overrides the collision bounding box of the actor at the given index (offset X/Y and size W/H in pixels). |
+| **Actor Set Movement Speed By Index** | Sets the actor's movement speed. |
+| **Actor Set Animation Speed By Index** | Sets the actor's animation frame tick speed. |
+| **Actor Set Animation Frame By Index** | Jumps the actor to a specific animation frame. |
+| **Actor Set Animation State By Index** | Sets the animation state, and whether it loops. |
+| **Actor Set Sprite By Index** | Swaps the actor's sprite sheet at runtime. |
+| **Actor Set Collision Box By Index** | Overrides the actor's collision bounding box (offset X/Y and size W/H in pixels). |
 
 ### Position readback
 
 | Event | Description |
 |---|---|
-| **Actor Get Position By Index** | Reads the current position of the actor at the given index into two variables (X and Y), in tiles or pixels. |
+| **Actor Get Position By Index** | Reads the actor's current position into two variables (X and Y), in tiles or pixels. |
 
 ### Scripts
 
 | Event | Description |
 |---|---|
-| **Actor Start Update Script By Index** | Starts the update script of the actor at the given index. |
-| **Actor Stop Update Script By Index** | Stops the update script of the actor at the given index. |
+| **Actor Start Update Script By Index** | Starts the actor's update script. |
+| **Actor Stop Update Script By Index** | Stops the actor's update script. |
 
 ### Effects
 
 | Event | Description |
 |---|---|
-| **Actor Emote By Index** | Plays an emote above the actor at the given index. |
-| **Actor Effects By Index** | Applies a visual effect to the actor at the given index: **Flicker** (for a given duration), **Split In**, or **Split Out** (with configurable distance and speed). |
+| **Actor Emote By Index** | Plays an emote above the actor. |
+| **Actor Effects By Index** | Applies a visual effect to the actor: **Flicker** (for a given duration), **Split In**, or **Split Out** (with configurable distance and speed). |
 
 ### Projectiles
 
 | Event | Description |
 |---|---|
-| **Launch Projectile Slot By Index** | Launches a pre-loaded projectile slot from the actor at the given index. Uses a slot number (1–5) instead of defining the projectile inline, and supports the same direction modes as above. |
+| **Launch Projectile Slot By Index** | Launches a pre-loaded projectile slot from the actor. Uses a slot number (1–5) instead of defining the projectile inline, and supports the same direction modes as the stock event. |
 
 ### Conditionals
 
 | Event | Description |
 |---|---|
-| **If Actor At Position By Index** | Branches based on whether the actor at the given index is at a specific position (tiles or pixels). |
-| **If Actor Direction By Index** | Branches based on whether the actor at the given index is facing a specific direction. |
-| **If Actor Distance From Actor By Index** | Branches based on the tile distance between two actors (each identified by index), using a comparison operator (`<`, `<=`, `==`, `>=`, `>`, `!=`). |
-| **If Actor Relative To Actor By Index** | Branches based on the spatial relationship between two actors (each identified by index): is above, is below, is left of, is right of. |
+| **If Actor At Position By Index** | Branches on whether the actor is at a specific position (tiles or pixels). |
+| **If Actor Direction By Index** | Branches on whether the actor is facing a specific direction. |
+| **If Actor Distance From Actor By Index** | Branches on the tile distance between two actors (each given by index), using a comparison operator (`<`, `<=`, `==`, `>=`, `>`, `!=`). |
+| **If Actor Relative To Actor By Index** | Branches on the spatial relationship between two actors (each given by index): is above, is below, is left of, is right of. |
 
 ---
 
-## The `actorIndex` value field
+## Memory Footprint
 
-Every event in this plugin accepts `actorIndex` (and `otherActorIndex` where relevant) as a **value** field. This means you can supply:
-
-- A **literal number** — e.g. `0` for the first scene actor (The player actor).
-- A **variable** — any global, local, or temp variable holding the index.
-- An **expression** — any arithmetic or bitwise expression that evaluates to an index.
-
-Actor indices are zero-based and correspond to the order actors appear in the scene (the `_index` field in each actor's `.gbsres` file). Index `0` is the first scene actor; the player character is not included in the scene actor list in the gbsres file, but the index is 0 for the player actor during runtime.
+- **WRAM added:** 0 bytes.
+- **SRAM added:** 0 bytes.
+- **ROM:** small — a set of native helpers in banked ROM, plus a few bytes of GBVM script per event call in your project's script banks. Only the events you actually use are compiled in.
 
 ---
 
