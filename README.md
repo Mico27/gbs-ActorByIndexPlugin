@@ -268,14 +268,11 @@ the core compiles, move it independently of this plugin.
 Grouped by the date each change was merged into the official
 [gb-studio-plugins](https://github.com/gb-studio-dev/gb-studio-plugins) repository.
 
-### 2026-08-03
-
-- Added the `patched/` folder.
-- README update.
+Only bug fixes, new features and feature changes are listed. Engine version
+bumps, patch regeneration, packaging fixes and documentation edits are omitted.
 
 ### 2026-06-21
 
 - Initial release, with 28 actor-by-index events.
 - Added an "Actor Get Index To Variable" event, writing directly to the variable alias and only using a temporary for indirect references.
 - Added "Launch Projectile In Slot By Index".
-- Added an example project.
